@@ -105,3 +105,115 @@ class SpringCurve extends Curve {
     return math.pow(friction / 10, -t) * (1 - t);
   }
 }
+
+class GravityCurve extends Curve {
+  const GravityCurve(
+      {this.bounciness = 400,
+      this.elasticity = 200,
+      this.returnToInitial = false});
+
+  final double bounciness;
+  final double elasticity;
+  final bool returnToInitial;
+  final double gravity = 100;
+
+  factory GravityCurve.forceWithGravity({
+    double bounciness = 400,
+    double elasticity = 200,
+  }) {
+    return GravityCurve(
+      bounciness: bounciness,
+      elasticity: elasticity,
+      returnToInitial: true,
+    );
+  }
+
+  @override
+  double transformInternal(double t) {
+    final double realBounciness = math.min((bounciness / 1250), 0.8);
+    final double realElasticity = elasticity / 1000;
+    final double L =
+        _calculateCurve(bounciness: realBounciness, elasticity: realElasticity);
+    final List<_EasingCurve> curves = _createEasingCurves(
+        bounciness: realBounciness, elasticity: realElasticity, L: L);
+    int i = 0;
+    _EasingCurve? curve = curves[i];
+    while (!(t >= curve!.start && t <= curve.end)) {
+      i++;
+      if (i >= curves.length) {
+        curve = null;
+        break;
+      } else {
+        curve = curves[i];
+      }
+    }
+    if (curve == null) {
+      return returnToInitial ? 0 : 1;
+    } else {
+      return _getPointInCurve(curve: curve, t: t);
+    }
+  }
+
+  double _calculateCurve({
+    required double bounciness,
+    required double elasticity,
+  }) {
+    double b = math.sqrt(2 / gravity);
+    _EasingCurve curve = _EasingCurve(start: -b, end: b, height: 1);
+    if (returnToInitial) {
+      curve.start = 0;
+      curve.end = curve.end * 2;
+    }
+    while (curve.height > 0.001) {
+      double L = curve.end - curve.start;
+      curve = _EasingCurve(
+        start: curve.end,
+        end: curve.end + L * bounciness,
+        height: curve.height * bounciness * bounciness,
+      );
+    }
+    return curve.end;
+  }
+
+  List<_EasingCurve> _createEasingCurves(
+      {required double bounciness,
+      required double elasticity,
+      required double L}) {
+    final double b = math.sqrt(2 / (gravity * L * L));
+    final List<_EasingCurve> curves = [];
+    _EasingCurve curve = _EasingCurve(start: -b, end: b, height: 1);
+    if (returnToInitial) {
+      curve.start = 0;
+      curve.end = curve.end * 2;
+    }
+    curves.add(curve);
+    while (curve.end < 1 && curve.height > 0.001) {
+      final double l2 = curve.end - curve.start;
+      curve = _EasingCurve(
+        start: curve.end,
+        end: curve.end + l2 * bounciness,
+        height: curve.height * elasticity,
+      );
+      curves.add(curve);
+    }
+    return curves;
+  }
+
+  double _getPointInCurve({required _EasingCurve curve, required double t}) {
+    double L = curve.end - curve.start;
+    double t2 = (2 / L) * (t) - 1 - (curve.start * 2 / L);
+    double c = t2 * t2 * curve.height - curve.height + 1;
+    if (returnToInitial) {
+      c = 1 - c;
+    }
+    return c;
+  }
+}
+
+class _EasingCurve {
+  double start;
+  double end;
+  double height;
+
+  _EasingCurve({required this.start, required this.end, required this.height});
+}
