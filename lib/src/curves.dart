@@ -24,9 +24,8 @@ class CubicCurve extends Cubic {
   }
 
   static void _checkFrictionValidate(int friction) {
-    assert(friction > 0 && friction < 1000, 'friction must be in (0,1000]');
+    assert(friction > 0 && friction <= 1000, 'friction must be in (0,1000]');
   }
-
 }
 
 class BounceCurve extends Curve {
@@ -68,11 +67,11 @@ class SpringCurve extends Curve {
       this.anticipationSize = 0,
       this.anticipationStrength = 0})
       : assert(
-            frequency > 0 && frequency < 1000, 'frequency must be in (0,100]'),
-        assert(friction > 0 && friction < 1000, 'friction must be in (0,100]'),
-        assert(anticipationSize >= 0 && anticipationSize < 1000,
+            frequency > 0 && frequency <= 1000, 'frequency must be in (0,100]'),
+        assert(friction > 0 && friction <= 1000, 'friction must be in (0,100]'),
+        assert(anticipationSize >= 0 && anticipationSize <= 1000,
             'anticipationSize must be in [0,100]'),
-        assert(anticipationStrength >= 0 && anticipationStrength < 1000,
+        assert(anticipationStrength >= 0 && anticipationStrength <= 1000,
             'anticipationStrength must be in [0,100]');
 
   @override
@@ -136,7 +135,11 @@ class GravityCurve extends Curve {
   const GravityCurve(
       {this.bounciness = 400,
       this.elasticity = 200,
-      this.returnToInitial = false});
+      this.returnToInitial = false})
+      : assert(bounciness > 0 && bounciness <= 1000,
+            'bounciness must be in (0,100]'),
+        assert(elasticity > 0 && elasticity <= 1000,
+            'elasticity must be in (0,100]');
 
   final int bounciness;
   final int elasticity;
