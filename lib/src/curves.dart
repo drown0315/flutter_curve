@@ -3,29 +3,30 @@ import 'dart:math' as math;
 import 'package:flutter/widgets.dart';
 
 class CubicCurve extends Cubic {
-  const CubicCurve(super.a, super.b, super.c, super.d);
+  const CubicCurve._(super.a, super.b, super.c, super.d);
 
-  static const _defaultFriction = 500;
+  static const defaultFriction = 500;
 
-  factory CubicCurve.easeIn({int friction = _defaultFriction}) {
+  factory CubicCurve.easeIn({int friction = defaultFriction}) {
     _checkFrictionValidate(friction);
-    return CubicCurve(0.92 - (friction / 1000), 0.0, 1.0, 1.0);
+    return CubicCurve._(0.92 - (friction / 1000), 0.0, 1.0, 1.0);
   }
 
-  factory CubicCurve.easeInOut({int friction = _defaultFriction}) {
+  factory CubicCurve.easeInOut({int friction = defaultFriction}) {
     _checkFrictionValidate(friction);
-    return CubicCurve(
+    return CubicCurve._(
         0.92 - (friction / 1000), 0.0, 0.08 + (friction / 1000), 1.0);
   }
 
-  factory CubicCurve.easeOut({int friction = _defaultFriction}) {
+  factory CubicCurve.easeOut({int friction = defaultFriction}) {
     _checkFrictionValidate(friction);
-    return CubicCurve(0.0, 0.0, 0.08 + (friction / 1000), 1.0);
+    return CubicCurve._(0.0, 0.0, 0.08 + (friction / 1000), 1.0);
   }
 
   static void _checkFrictionValidate(int friction) {
     assert(friction > 0 && friction < 1000, 'friction must be in (0,1000]');
   }
+
 }
 
 class BounceCurve extends Curve {
@@ -45,6 +46,13 @@ class BounceCurve extends Curve {
     const double b = -math.pi / 2;
     final angle = realFrequency * t + b;
     return at * math.cos(angle);
+  }
+
+  BounceCurve copyWith({int? friction, int? frequency}) {
+    return BounceCurve(
+      friction: friction ?? this.friction,
+      frequency: frequency ?? this.frequency,
+    );
   }
 }
 
@@ -104,6 +112,24 @@ class SpringCurve extends Curve {
   double getAt2({required double t, required friction}) {
     return math.pow(friction / 10, -t) * (1 - t);
   }
+
+  SpringCurve copyWith(
+      {int? frequency,
+      int? friction,
+      int? anticipationSize,
+      int? anticipationStrength}) {
+    return SpringCurve(
+        frequency: frequency ?? this.frequency,
+        friction: friction ?? this.friction,
+        anticipationSize: anticipationSize ?? this.anticipationSize,
+        anticipationStrength:
+            anticipationStrength ?? this.anticipationStrength);
+  }
+
+  @override
+  String toString() {
+    return 'SpringCurve{frequency: $frequency, friction: $friction, anticipationSize: $anticipationSize, anticipationStrength: $anticipationStrength}';
+  }
 }
 
 class GravityCurve extends Curve {
@@ -112,21 +138,10 @@ class GravityCurve extends Curve {
       this.elasticity = 200,
       this.returnToInitial = false});
 
-  final double bounciness;
-  final double elasticity;
+  final int bounciness;
+  final int elasticity;
   final bool returnToInitial;
   final double gravity = 100;
-
-  factory GravityCurve.forceWithGravity({
-    double bounciness = 400,
-    double elasticity = 200,
-  }) {
-    return GravityCurve(
-      bounciness: bounciness,
-      elasticity: elasticity,
-      returnToInitial: true,
-    );
-  }
 
   @override
   double transformInternal(double t) {
@@ -207,6 +222,27 @@ class GravityCurve extends Curve {
       c = 1 - c;
     }
     return c;
+  }
+
+  GravityCurve copyWith({
+    int? bounciness,
+    int? elasticity,
+  }) {
+    return GravityCurve(
+        bounciness: bounciness ?? this.bounciness,
+        elasticity: elasticity ?? this.elasticity);
+  }
+}
+
+class ForceWithGravityCurve extends GravityCurve {
+  const ForceWithGravityCurve({super.bounciness = 400, super.elasticity = 200})
+      : super(returnToInitial: true);
+
+  @override
+  ForceWithGravityCurve copyWith({int? bounciness, int? elasticity}) {
+    return ForceWithGravityCurve(
+        bounciness: bounciness ?? this.bounciness,
+        elasticity: elasticity ?? this.elasticity);
   }
 }
 

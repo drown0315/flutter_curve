@@ -1,6 +1,9 @@
-import 'package:example/src/widgets/curve_illustration.dart';
+import 'package:example/src/example_widget/widgets/curve_option/spring_option.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_curve/flutter_curve.dart';
+
+import 'example_widget/example.dart';
+import 'example_widget/widgets/curve_illustration.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -10,6 +13,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  SpringCurve curve = const SpringCurve();
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -28,7 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: const Text('Flutter curve'),
       ),
-      body: const Center(
+      body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: Column(
@@ -45,9 +50,16 @@ class _MyHomePageState extends State<MyHomePage> {
           // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
           // action in the IDE, or press "p" in the console), to see the
           // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            CurveIllustration(SpringCurve()),
+            const SizedBox(height: 20),
+            // CurveIllustration(curve),
+            // SpringOption(onChanged: (_, curve) {
+            //   setState(() {
+            //     this.curve = curve;
+            //   });
+            // }),
+            CurveExample()
           ],
         ),
       ),
