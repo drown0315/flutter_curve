@@ -33,7 +33,7 @@ curve: CubicCurve.easeIn(frition:30));
 
 ```yaml
 dependencies:
-  flutter_curve: ^0.1.0
+  flutter_curve: ^0.0.1
 ```
 
 Run `flutter packages get` in the root directory of your app.
