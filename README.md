@@ -59,7 +59,7 @@ late final animation = CurvedAnimation(
 );
 ```
 
-### Support Curve
+## Support Curve
 
 - [x] SpringCurve
 - [x] CubicCurve.easeIn
