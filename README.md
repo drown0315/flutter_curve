@@ -5,7 +5,8 @@ Flutter Curve library is inspired by [Dynamic.js](http://dynamicsjs.com/)
 This library lets you easy to customize your own curve animation.
 
 ## Example
-![Preview](preview/flutter_curve.gif)
+<img src="/preview/flutter_curve.gif" width="360" height="808"/>
+
 ## Usage
 
 Use them like you use `Curve`, because `flutter_curve` is a subclass of `Curve`.
