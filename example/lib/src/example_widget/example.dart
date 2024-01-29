@@ -19,7 +19,7 @@ class _CurveExampleState extends State<CurveExample> {
       child: Column(
         children: [
           _buildCurveSelector(),
-          CurvePanel(curveType: _selectedMenu, key: ValueKey(_selectedMenu))
+          CurvePanel(curveType: _selectedMenu, key: ValueKey(_selectedMenu)),
         ],
       ),
     );
@@ -30,11 +30,7 @@ class _CurveExampleState extends State<CurveExample> {
       value: _selectedMenu,
       elevation: 16,
       style: const TextStyle(color: Colors.deepPurple),
-      icon: const SizedBox.shrink(),
-      underline: Container(
-        height: 2,
-        color: Colors.deepPurpleAccent,
-      ),
+      dropdownColor: Colors.white,
       onChanged: (curveMenu) {
         setState(() {
           _selectedMenu = curveMenu!;

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../style.dart';
 
-/// [duration] ms unit.
-typedef OptionChanged<T extends Curve> = void Function(int duration, T curve);
+typedef OptionChanged<T extends Curve> = void Function(
+    Duration duration, T curve);
 
 abstract class CurveOption<T extends Curve> extends StatefulWidget {
   const CurveOption({Key? key, required this.onChanged}) : super(key: key);
@@ -15,8 +15,8 @@ abstract class CurveOption<T extends Curve> extends StatefulWidget {
 }
 
 abstract class CurveOptionsState<T extends CurveOption> extends State<T> {
-  final int _initialDuration = 1000;
-  late int duration = _initialDuration;
+  final Duration _initialDuration = const Duration(milliseconds: 1000);
+  late Duration duration = _initialDuration;
 
   @override
   Widget build(BuildContext context) {
@@ -28,17 +28,16 @@ abstract class CurveOptionsState<T extends CurveOption> extends State<T> {
           CurveOptionItem(
             title: 'duration',
             onChanged: (value) {
-              duration = value;
+              duration = Duration(milliseconds: value);
               onDurationChanged(duration);
             },
-            initialValue: _initialDuration,
+            initialValue: _initialDuration.inMilliseconds,
           ),
           ...buildConfigs(),
-        ]
-          ..expand(
-              (element) => [element, const SizedBox(height: SizeConstant.xs)])
-          .toList()
-          .removeLast(),
+        ]..expand(
+                (element) => [element, const SizedBox(height: SizeConstant.xs)])
+            .toList()
+            .removeLast(),
       ),
     );
   }
@@ -47,8 +46,7 @@ abstract class CurveOptionsState<T extends CurveOption> extends State<T> {
 
   /// Called when duration changed.
   ///
-  /// [duration]: ms unit
-  void onDurationChanged(int duration);
+  void onDurationChanged(Duration duration);
 }
 
 class CurveOptionItem extends StatefulWidget {

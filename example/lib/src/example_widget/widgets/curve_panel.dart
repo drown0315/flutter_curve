@@ -6,6 +6,7 @@ import 'package:example/src/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_curve/flutter_curve.dart';
 
+import 'animation_example.dart';
 import 'curve_option/curve_option.dart';
 import 'curve_option/spring_option.dart';
 
@@ -29,6 +30,8 @@ class CurvePanel extends StatefulWidget {
 
 class _CurvePanelState extends State<CurvePanel> {
   late Curve curve;
+
+  Duration duration = const Duration(milliseconds: 1000);
 
   @override
   void initState() {
@@ -60,34 +63,34 @@ class _CurvePanelState extends State<CurvePanel> {
 
   @override
   Widget build(BuildContext context) {
-    final CurveOption curveOption;
+    final CurveOption curveOptionWidget;
     switch (widget.curveType) {
       case CurveType.spring:
-        curveOption = SpringOption(onChanged: _onCurveChanged);
+        curveOptionWidget = SpringOption(onChanged: _onCurveChanged);
         break;
       case CurveType.bounce:
-        curveOption = BounceOption(onChanged: _onCurveChanged);
+        curveOptionWidget = BounceOption(onChanged: _onCurveChanged);
         break;
       case CurveType.gravity:
-        curveOption = GravityOption(onChanged: _onCurveChanged);
+        curveOptionWidget = GravityOption(onChanged: _onCurveChanged);
         break;
       case CurveType.forceWithGravity:
-        curveOption = ForceWithGravityOption(onChanged: _onCurveChanged);
+        curveOptionWidget = ForceWithGravityOption(onChanged: _onCurveChanged);
         break;
       case CurveType.easeIn:
-        curveOption = CubicOption(
+        curveOptionWidget = CubicOption(
             cubicType: CubicType.easeIn, onChanged: _onCurveChanged);
         break;
       case CurveType.easeInOut:
-        curveOption = CubicOption(
+        curveOptionWidget = CubicOption(
             cubicType: CubicType.easeInOut, onChanged: _onCurveChanged);
         break;
       case CurveType.easeOut:
-        curveOption = CubicOption(
+        curveOptionWidget = CubicOption(
             cubicType: CubicType.easeOut, onChanged: _onCurveChanged);
         break;
       default:
-        curveOption = BounceOption(onChanged: _onCurveChanged);
+        curveOptionWidget = BounceOption(onChanged: _onCurveChanged);
         break;
     }
 
@@ -95,15 +98,22 @@ class _CurvePanelState extends State<CurvePanel> {
       mainAxisSize: MainAxisSize.min,
       children: [
         CurveIllustration(curve),
-        const SizedBox(height: SizeConstant.xs),
-        curveOption
+        const SizedBox(height: SizeConstant.s),
+        curveOptionWidget,
+        const SizedBox(height: SizeConstant.s),
+        AnimationExample(
+          curve: curve,
+          key: ValueKey(curve),
+          duration: duration,
+        ),
       ],
     );
   }
 
-  void _onCurveChanged(int duration, Curve curve) {
+  void _onCurveChanged(Duration duration, Curve curve) {
     setState(() {
       this.curve = curve;
+      this.duration = duration;
     });
   }
 }

@@ -36,7 +36,7 @@ class GravityOptionState extends CurveOptionsState<GravityOption> {
   }
 
   @override
-  void onDurationChanged(int duration) {
+  void onDurationChanged(Duration duration) {
     _onOptionChanged(_curCurve);
   }
 
@@ -81,7 +81,7 @@ class ForceWithGravityOptionState
   }
 
   @override
-  void onDurationChanged(int duration) {
+  void onDurationChanged(Duration duration) {
     _onOptionChanged(_curCurve);
   }
 

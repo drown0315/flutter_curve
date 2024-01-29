@@ -54,7 +54,7 @@ class SpringOptionsState extends CurveOptionsState<SpringOption> {
   }
 
   @override
-  void onDurationChanged(int duration) {
+  void onDurationChanged(Duration duration) {
     _onOptionChanged(_curCurve);
   }
 

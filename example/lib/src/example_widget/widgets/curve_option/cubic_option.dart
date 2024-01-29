@@ -69,7 +69,7 @@ class CubicOptionState extends CurveOptionsState<CubicOption> {
   }
 
   @override
-  void onDurationChanged(int duration) {
+  void onDurationChanged(Duration duration) {
     _onOptionChanged(_curCurve);
   }
 
