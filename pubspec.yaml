@@ -1,11 +1,15 @@
 name: flutter_curve
-description: A new Flutter project.
+description: Easy customize curve of animation.
 version: 0.0.1
-homepage:
+homepage: https://github.com/drown0315/flutter_curve
+topics:
+  - animation
+  - ui
+  - effects
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
-  flutter: ">=1.17.0"
+  sdk: '>=2.17.0 <4.0.0'
+  flutter: ">=2.0.0"
 
 dependencies:
   flutter:
