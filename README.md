@@ -24,7 +24,8 @@ scrollController.animateTo(0, duration: const Duration(milliseconds: 500),
 curve: CubicCurve.easeIn(frition: 30));
 ```
 ## Example
-<img src="/preview/flutter_curve.gif" width="360" height="808"/>
+
+<img src="https://raw.githubusercontent.com/drown0315/flutter_curve/assets/flutter_curve.gif" width="360" height="808"/>
 
 ## Usage
 
