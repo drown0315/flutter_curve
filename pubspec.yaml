@@ -1,6 +1,6 @@
 name: flutter_curve
 description: Easy customize animation curve.
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/drown0315/flutter_curve
 issue_tracker: https://github.com/drown0315/flutter_curve/issues
 
@@ -8,8 +8,9 @@ topics:
   - animation
   - ui
   - effects
-  - widgets
+  - curve
   - widget
+
 
 environment:
   sdk: '>=2.17.0 <4.0.0'
