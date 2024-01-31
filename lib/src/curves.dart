@@ -30,9 +30,10 @@ class CubicCurve extends Cubic {
 
 class BounceCurve extends Curve {
   const BounceCurve({this.friction = 200, this.frequency = 300})
-      : assert(
-            frequency > 0 && frequency < 1000, 'frequency must be in (0,1000]'),
-        assert(friction > 0 && friction < 1000, 'friction must be in (0,1000]');
+      : assert(frequency > 0 && frequency <= 1000,
+            'frequency must be in (0,1000]'),
+        assert(
+            friction > 0 && friction <= 1000, 'friction must be in (0,1000]');
 
   final int friction;
   final int frequency;
