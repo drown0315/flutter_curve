@@ -7,17 +7,27 @@ class CubicCurve extends Cubic {
 
   static const defaultFriction = 500;
 
+  /// A cubic animation curve that starts slowly and ends quickly.
+  ///
+  /// {@animation 464 192 https://flutter.github.io/assets-for-api-docs/assets/animation/curve_ease_in.mp4}
   factory CubicCurve.easeIn({int friction = defaultFriction}) {
     _checkFrictionValidate(friction);
     return CubicCurve._(0.92 - (friction / 1000), 0.0, 1.0, 1.0);
   }
 
+  /// A cubic animation curve that starts slowly, speeds up, and then ends
+  /// slowly.
+  ///
+  /// {@animation 464 192 https://flutter.github.io/assets-for-api-docs/assets/animation/curve_ease_in_out.mp4}
   factory CubicCurve.easeInOut({int friction = defaultFriction}) {
     _checkFrictionValidate(friction);
     return CubicCurve._(
         0.92 - (friction / 1000), 0.0, 0.08 + (friction / 1000), 1.0);
   }
 
+  /// A cubic animation curve that starts quickly and ends slowly.
+  ///
+  /// {@animation 464 192 https://flutter.github.io/assets-for-api-docs/assets/animation/curve_ease_out.mp4}
   factory CubicCurve.easeOut({int friction = defaultFriction}) {
     _checkFrictionValidate(friction);
     return CubicCurve._(0.0, 0.0, 0.08 + (friction / 1000), 1.0);
