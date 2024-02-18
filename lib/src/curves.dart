@@ -78,12 +78,12 @@ class SpringCurve extends Curve {
       this.anticipationSize = 0,
       this.anticipationStrength = 0})
       : assert(
-            frequency > 0 && frequency <= 1000, 'frequency must be in (0,100]'),
-        assert(friction > 0 && friction <= 1000, 'friction must be in (0,100]'),
-        assert(anticipationSize >= 0 && anticipationSize <= 1000,
-            'anticipationSize must be in [0,100]'),
+            frequency > 0 && frequency <= 1000, 'frequency must be in (0,1000]'),
+        assert(friction > 0 && friction <= 1000, 'friction must be in (0,1000]'),
+        assert(anticipationSize >= 0 && anticipationSize < 1000,
+            'anticipationSize must be in [0,1000)'),
         assert(anticipationStrength >= 0 && anticipationStrength <= 1000,
-            'anticipationStrength must be in [0,100]');
+            'anticipationStrength must be in [0,1000]');
 
   @override
   double transformInternal(double t) {
@@ -148,9 +148,9 @@ class GravityCurve extends Curve {
       this.elasticity = 200,
       this.returnToInitial = false})
       : assert(bounciness > 0 && bounciness <= 1000,
-            'bounciness must be in (0,100]'),
+            'bounciness must be in (0,1000]'),
         assert(elasticity > 0 && elasticity <= 1000,
-            'elasticity must be in (0,100]');
+            'elasticity must be in (0,1000]');
 
   final int bounciness;
   final int elasticity;

@@ -35,6 +35,7 @@ class SpringOptionsState extends CurveOptionsState<SpringOption> {
       CurveOptionItem(
         title: 'anticipationSize',
         minValue: 0,
+        maxValue: 999,
         onChanged: (anticipationSize) {
           _onOptionChanged(
               _curCurve.copyWith(anticipationSize: anticipationSize));
