@@ -1,9 +1,10 @@
+import 'package:example/src/example/widgets/ball_animation.dart';
 import 'package:example/src/style.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_curve/flutter_curve.dart';
 
-import 'animation_example.dart';
 import 'code_preview/code_preview.dart';
 import 'curve_illustration.dart';
 import 'curve_option/bounce_option.dart';
@@ -11,6 +12,7 @@ import 'curve_option/cubic_option.dart';
 import 'curve_option/curve_option.dart';
 import 'curve_option/gravity_option.dart';
 import 'curve_option/spring_option.dart';
+import 'effect_animation.dart';
 
 enum CurveType {
   spring,
@@ -144,7 +146,7 @@ class _CurvePanelState extends State<CurvePanel> {
         const SizedBox(height: SizeConstant.s),
 
         /// Curved ball animation.
-        AnimationExample(
+        BallAnimation(
           curve: curve,
           key: ValueKey(curve),
           duration: duration,
@@ -176,23 +178,36 @@ class _CurvePanelState extends State<CurvePanel> {
               curveOptionWidget
             ],
           ),
-          const SizedBox(height: SizeConstant.l),
+          const SizedBox(height: SizeConstant.m),
 
-          /// Curved ball animation.
-          AnimationExample(
-            curve: curve,
-            key: ValueKey(curve),
-            duration: duration,
-            width: 600,
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              /// Curved ball animation.
+              BallAnimation(
+                curve: curve,
+                key: ValueKey(curve),
+                duration: duration,
+                width: 400,
+              ),
+              const SizedBox(width: SizeConstant.m),
+
+              /// Opacity + Rotate + Translation + Scale effect example
+              EffectAnimationList(
+                  key: ValueKey('gridEffectList:$curve duration:$duration'),
+                  curve: curve,
+                  duration: duration,
+                  width: 150,
+                  height: 150),
+            ],
           ),
 
-          const SizedBox(height: SizeConstant.l),
-
+          /// Code Preview
           Align(
-            alignment: Alignment.topLeft,
-            child: CodePreview.create(
-                curve: curve, width: 550, duration: duration),
-          )
+              alignment: Alignment.topLeft,
+              child: CodePreview.create(
+                  curve: curve, width: 550, duration: duration)),
         ],
       ),
     );

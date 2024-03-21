@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 /// Curved ball animation.
-class AnimationExample extends StatefulWidget {
-  const AnimationExample(
+class BallAnimation extends StatefulWidget {
+  const BallAnimation(
       {super.key,
       required this.curve,
       required this.duration,
@@ -13,10 +13,10 @@ class AnimationExample extends StatefulWidget {
   final double width;
 
   @override
-  State<AnimationExample> createState() => _AnimationExampleState();
+  State<BallAnimation> createState() => _BallAnimationState();
 }
 
-class _AnimationExampleState extends State<AnimationExample>
+class _BallAnimationState extends State<BallAnimation>
     with SingleTickerProviderStateMixin {
   final double _movingCircleRadius = 15;
   final double _guideLineCircleRadius = 5;
