@@ -3,7 +3,8 @@ import 'package:flutter_curve/flutter_curve.dart';
 import 'curve_option.dart';
 
 class GravityOption extends CurveOption<GravityCurve> {
-  const GravityOption({super.key, required super.onChanged});
+  const GravityOption(
+      {super.key, required super.onChanged, required super.width});
 
   @override
   CurveOptionsState createState() {
@@ -24,6 +25,7 @@ class GravityOptionState extends CurveOptionsState<GravityOption> {
           _onOptionChanged(_curCurve.copyWith(bounciness: bounciness));
         },
         initialValue: _initialCurve.bounciness,
+        width: widget.width,
       ),
       CurveOptionItem(
         title: 'elasticity',
@@ -31,6 +33,7 @@ class GravityOptionState extends CurveOptionsState<GravityOption> {
           _onOptionChanged(_curCurve.copyWith(elasticity: elasticity));
         },
         initialValue: _initialCurve.elasticity,
+        width: widget.width,
       ),
     ];
   }
@@ -47,7 +50,8 @@ class GravityOptionState extends CurveOptionsState<GravityOption> {
 }
 
 class ForceWithGravityOption extends CurveOption<ForceWithGravityCurve> {
-  const ForceWithGravityOption({super.key, required super.onChanged});
+  const ForceWithGravityOption(
+      {super.key, required super.onChanged, required super.width});
 
   @override
   CurveOptionsState createState() {
@@ -69,6 +73,7 @@ class ForceWithGravityOptionState
           _onOptionChanged(_curCurve.copyWith(bounciness: bounciness));
         },
         initialValue: _initialCurve.bounciness,
+        width: widget.width,
       ),
       CurveOptionItem(
         title: 'elasticity',
@@ -76,6 +81,7 @@ class ForceWithGravityOptionState
           _onOptionChanged(_curCurve.copyWith(elasticity: elasticity));
         },
         initialValue: _initialCurve.elasticity,
+        width: widget.width,
       ),
     ];
   }

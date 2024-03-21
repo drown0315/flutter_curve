@@ -3,7 +3,8 @@ import 'package:flutter_curve/flutter_curve.dart';
 import 'curve_option.dart';
 
 class SpringOption extends CurveOption<SpringCurve> {
-  const SpringOption({super.key, required super.onChanged});
+  const SpringOption(
+      {super.key, required super.onChanged, required super.width});
 
   @override
   CurveOptionsState createState() {
@@ -24,6 +25,7 @@ class SpringOptionsState extends CurveOptionsState<SpringOption> {
           _onOptionChanged(_curCurve.copyWith(frequency: frequency));
         },
         initialValue: _initialCurve.frequency,
+        width: widget.width,
       ),
       CurveOptionItem(
         title: 'friction',
@@ -31,6 +33,7 @@ class SpringOptionsState extends CurveOptionsState<SpringOption> {
           _onOptionChanged(_curCurve.copyWith(friction: friction));
         },
         initialValue: _initialCurve.friction,
+        width: widget.width,
       ),
       CurveOptionItem(
         title: 'anticipationSize',
@@ -41,6 +44,7 @@ class SpringOptionsState extends CurveOptionsState<SpringOption> {
               _curCurve.copyWith(anticipationSize: anticipationSize));
         },
         initialValue: _initialCurve.anticipationSize,
+        width: widget.width,
       ),
       CurveOptionItem(
         title: 'anticipationStrength',
@@ -50,6 +54,7 @@ class SpringOptionsState extends CurveOptionsState<SpringOption> {
               _curCurve.copyWith(anticipationStrength: anticipationStrength));
         },
         initialValue: _initialCurve.anticipationStrength,
+        width: widget.width,
       ),
     ];
   }

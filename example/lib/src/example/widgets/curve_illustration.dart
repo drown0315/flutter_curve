@@ -1,21 +1,29 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
+/// Animated Curve line chart.
 class CurveIllustration<T extends Curve> extends StatelessWidget {
-  const CurveIllustration(this.curve, {super.key});
+  const CurveIllustration(
+    this.curve, {
+    super.key,
+    required this.width,
+    required this.height,
+  });
 
   final T curve;
+  final double width;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.sizeOf(context).width * 0.8,
-      height: 200,
+      width: width,
+      height: height,
       color: const Color(0xf5f5f5f5),
       alignment: Alignment.center,
       child: SizedBox(
-          width: MediaQuery.sizeOf(context).width * 0.8,
-          height: 100,
+          width: width,
+          height: height / 2,
           child: CustomPaint(
             painter: CurvePainter(curve),
           )),
@@ -59,7 +67,7 @@ class CurvePainter extends CustomPainter {
         PointMode.polygon,
         points,
         Paint()
-          ..color = Colors.blue
+          ..color = Colors.blueAccent
           ..strokeWidth = 2);
   }
 
@@ -98,6 +106,6 @@ class CurvePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CurvePainter oldDelegate) {
-    return curve !=oldDelegate.curve;
+    return curve != oldDelegate.curve;
   }
 }

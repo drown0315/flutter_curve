@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 
+/// Curved ball animation.
 class AnimationExample extends StatefulWidget {
   const AnimationExample(
-      {super.key, required this.curve, required this.duration});
+      {super.key,
+      required this.curve,
+      required this.duration,
+      required this.width});
 
   final Curve curve;
   final Duration duration;
+  final double width;
 
   @override
   State<AnimationExample> createState() => _AnimationExampleState();
@@ -18,10 +23,9 @@ class _AnimationExampleState extends State<AnimationExample>
 
   @override
   Widget build(BuildContext context) {
-    final maxMoveValue =
-        MediaQuery.sizeOf(context).width * 0.8 - _movingCircleRadius * 2;
+    final maxMoveValue = widget.width - _movingCircleRadius * 2;
     return Container(
-      width: MediaQuery.sizeOf(context).width * 0.8,
+      width: widget.width,
       height: 30,
       alignment: Alignment.center,
       child: Stack(
@@ -55,7 +59,7 @@ class _AnimationExampleState extends State<AnimationExample>
           width: _movingCircleRadius * 2,
           height: _movingCircleRadius * 2,
           decoration: const BoxDecoration(
-            color: Colors.blue,
+            color: Colors.blueAccent,
             shape: BoxShape.circle,
           ),
         ));
