@@ -63,14 +63,7 @@ abstract class CodePreview<T extends Curve> extends StatelessWidget {
               const TextSpan(text: ')'),
             ],
           ),
-          style: textStyle
-      ),
-    );
-  }
-
-  InlineSpan buildDurationTextSpan() {
-    return TextSpan(
-      text: 'duration: ${duration.inMilliseconds}',
+          style: textStyle),
     );
   }
 
@@ -83,7 +76,6 @@ abstract class CodePreview<T extends Curve> extends StatelessWidget {
   InlineSpan _buildCurveOption() {
     return TextSpan(
         children: [
-      buildDurationTextSpan(),
       ...getCurveOptionsText()
           .map((optionText) => TextSpan(text: optionText))
           .toList(),

@@ -25,9 +25,6 @@ void main() {
       /// Assert.
       expect(find.textContaining('SpringCurve'), findsOneWidget);
       expect(
-          find.textContaining('duration: ${_defaultDuration.inMilliseconds}'),
-          findsOneWidget);
-      expect(
           find.textContaining('frequency: ${curve.frequency}'), findsOneWidget);
       expect(
           find.textContaining('friction: ${curve.friction}'), findsOneWidget);
@@ -54,9 +51,6 @@ void main() {
       /// Assert.
       expect(find.textContaining('BounceCurve'), findsOneWidget);
       expect(
-          find.textContaining('duration: ${_defaultDuration.inMilliseconds}'),
-          findsOneWidget);
-      expect(
           find.textContaining('frequency: ${curve.frequency}'), findsOneWidget);
       expect(
           find.textContaining('friction: ${curve.friction}'), findsOneWidget);
@@ -76,9 +70,6 @@ void main() {
 
       /// Assert.
       expect(find.textContaining('GravityCurve'), findsOneWidget);
-      expect(
-          find.textContaining('duration: ${_defaultDuration.inMilliseconds}'),
-          findsOneWidget);
       expect(find.textContaining('bounciness: ${curve.bounciness}'),
           findsOneWidget);
       expect(find.textContaining('elasticity: ${curve.elasticity}'),
@@ -100,9 +91,6 @@ void main() {
 
       /// Assert.
       expect(find.textContaining('ForceWithGravity'), findsOneWidget);
-      expect(
-          find.textContaining('duration: ${_defaultDuration.inMilliseconds}'),
-          findsOneWidget);
       expect(find.textContaining('bounciness: ${curve.bounciness}'),
           findsOneWidget);
       expect(find.textContaining('elasticity: ${curve.elasticity}'),
@@ -124,9 +112,6 @@ void main() {
 
       /// Assert.
       expect(find.textContaining('CubicCurve.easeIn'), findsOneWidget);
-      expect(
-          find.textContaining('duration: ${_defaultDuration.inMilliseconds}'),
-          findsOneWidget);
       expect(find.textContaining('friction: $friction'), findsOneWidget);
     });
 
@@ -145,9 +130,6 @@ void main() {
 
       /// Assert.
       expect(find.textContaining('CubicCurve.easeOut'), findsOneWidget);
-      expect(
-          find.textContaining('duration: ${_defaultDuration.inMilliseconds}'),
-          findsOneWidget);
       expect(find.textContaining('friction: $friction'), findsOneWidget);
     });
 
@@ -166,9 +148,6 @@ void main() {
 
       /// Assert.
       expect(find.textContaining('CubicCurve.easeInOut'), findsOneWidget);
-      expect(
-          find.textContaining('duration: ${_defaultDuration.inMilliseconds}'),
-          findsOneWidget);
       expect(find.textContaining('friction: $friction'), findsOneWidget);
     });
   });
