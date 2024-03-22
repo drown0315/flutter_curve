@@ -26,19 +26,19 @@ class EffectAnimationList extends StatelessWidget {
         shrinkWrap: true,
         children: [
           OpacityExample(
-            curve: Curves.easeInOut,
+            curve: curve,
             duration: duration,
           ),
           RotateExample(
-            curve: Curves.easeInOut,
+            curve: curve,
             duration: duration,
           ),
           TranslationExample(
-            curve: Curves.easeInOut,
+            curve: curve,
             duration: duration,
           ),
           ScaleExample(
-            curve: Curves.easeInOut,
+            curve: curve,
             duration: duration,
           ),
         ],
