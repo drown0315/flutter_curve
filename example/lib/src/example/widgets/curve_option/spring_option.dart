@@ -7,7 +7,7 @@ import 'curve_option.dart';
 
 /// Spring Curve Option
 ///  contains: Basic Spring Curve Option and Advanced Spring Curve Option.
-class SpringComposeOption extends StatelessWidget {
+class SpringComposeOption extends StatefulWidget {
   const SpringComposeOption(
       {super.key, required this.width, required this.onChanged});
 
@@ -15,9 +15,17 @@ class SpringComposeOption extends StatelessWidget {
   final OptionChanged<SpringCurve> onChanged;
 
   @override
+  State<SpringComposeOption> createState() => _SpringComposeOptionState();
+}
+
+class _SpringComposeOptionState extends State<SpringComposeOption> {
+  SpringCurve _initialCurve = SpringCurve();
+  late SpringCurve _curCurve = _initialCurve;
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: width,
+      width: widget.width,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -34,9 +42,15 @@ class SpringComposeOption extends StatelessWidget {
       final bool isAdvanced = ref.watch(springIsAdvancedModeProvider);
       return isAdvanced
           ? AdvancedSpringOption(
-              key: ValueKey(isAdvanced), onChanged: onChanged, width: width)
+              onChanged: onOptionChanged,
+              width: widget.width,
+              initialCurve: _initialCurve,
+            )
           : SpringOption(
-              key: ValueKey(isAdvanced), onChanged: onChanged, width: width);
+              onChanged: onOptionChanged,
+              width: widget.width,
+              initialCurve: _initialCurve,
+            );
     });
   }
 
@@ -48,7 +62,7 @@ class SpringComposeOption extends StatelessWidget {
       builder: (_, ref, __) {
         final bool isAdvanced = ref.watch(springIsAdvancedModeProvider);
         return Container(
-          constraints: BoxConstraints(maxWidth: width),
+          constraints: BoxConstraints(maxWidth: widget.width),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -57,6 +71,7 @@ class SpringComposeOption extends StatelessWidget {
               Switch(
                   value: isAdvanced,
                   onChanged: (value) {
+                    _initialCurve = _curCurve;
                     ref.read(springIsAdvancedModeProvider.notifier).state =
                         value;
                   })
@@ -66,11 +81,22 @@ class SpringComposeOption extends StatelessWidget {
       },
     );
   }
+
+  void onOptionChanged(Duration duration, SpringCurve curve) {
+    _curCurve = curve;
+    widget.onChanged.call(duration, curve);
+  }
 }
 
 class SpringOption extends CurveOption<SpringCurve> {
-  const SpringOption(
-      {super.key, required super.onChanged, required super.width});
+  const SpringOption({
+    super.key,
+    required super.onChanged,
+    required super.width,
+    required this.initialCurve,
+  });
+
+  final SpringCurve initialCurve;
 
   @override
   CurveOptionsState createState() {
@@ -79,7 +105,8 @@ class SpringOption extends CurveOption<SpringCurve> {
 }
 
 class SpringOptionsState extends CurveOptionsState<SpringOption> {
-  late final _initialCurve = SpringCurve();
+  SpringCurve get _initialCurve => widget.initialCurve;
+
   late SpringCurve _curCurve = _initialCurve;
 
   @override
@@ -116,8 +143,14 @@ class SpringOptionsState extends CurveOptionsState<SpringOption> {
 }
 
 class AdvancedSpringOption extends CurveOption<SpringCurve> {
-  const AdvancedSpringOption(
-      {super.key, required super.onChanged, required super.width});
+  const AdvancedSpringOption({
+    super.key,
+    required super.onChanged,
+    required super.width,
+    required this.initialCurve,
+  });
+
+  final SpringCurve initialCurve;
 
   @override
   CurveOptionsState createState() {
@@ -127,7 +160,7 @@ class AdvancedSpringOption extends CurveOption<SpringCurve> {
 
 class AdvancedSpringOptionState
     extends CurveOptionsState<AdvancedSpringOption> {
-  late final _initialCurve = SpringCurve();
+  SpringCurve get _initialCurve => widget.initialCurve;
   late SpringCurve _curCurve = _initialCurve;
 
   @override
