@@ -4,12 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_curve/flutter_curve.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'code_preview/code_preview.dart';
 import 'curve_illustration.dart';
 import 'curve_option/bounce_option.dart';
 import 'curve_option/cubic_option.dart';
-import 'curve_option/curve_option.dart';
 import 'curve_option/gravity_option.dart';
 import 'curve_option/spring_option.dart';
 import 'effect_animation.dart';
@@ -43,7 +43,7 @@ class _CurvePanelState extends State<CurvePanel> {
     super.initState();
     switch (widget.curveType) {
       case CurveType.spring:
-        curve = const SpringCurve();
+        curve = SpringCurve();
         break;
       case CurveType.bounce:
         curve = const BounceCurve();
@@ -68,11 +68,11 @@ class _CurvePanelState extends State<CurvePanel> {
 
   @override
   Widget build(BuildContext context) {
-    final CurveOption curveOptionWidget;
+    final Widget curveOptionWidget;
     final width = kIsWeb ? 300.0 : MediaQuery.sizeOf(context).width * 0.86;
     switch (widget.curveType) {
       case CurveType.spring:
-        curveOptionWidget = SpringOption(
+        curveOptionWidget = SpringComposeOption(
           onChanged: _onCurveChanged,
           width: width,
         );
@@ -129,7 +129,7 @@ class _CurvePanelState extends State<CurvePanel> {
         : _buildBodyForApp(curveOptionWidget: curveOptionWidget);
   }
 
-  Widget _buildBodyForApp({required CurveOption curveOptionWidget}) {
+  Widget _buildBodyForApp({required Widget curveOptionWidget}) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -156,7 +156,7 @@ class _CurvePanelState extends State<CurvePanel> {
     );
   }
 
-  Widget _buildBodyForWeb({required CurveOption curveOptionWidget}) {
+  Widget _buildBodyForWeb({required Widget curveOptionWidget}) {
     return IntrinsicWidth(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -206,8 +206,10 @@ class _CurvePanelState extends State<CurvePanel> {
           /// Code Preview
           Align(
               alignment: Alignment.topLeft,
-              child: CodePreview.create(
-                  curve: curve, width: 550, duration: duration)),
+              child: Consumer(builder: (_, ref, __) {
+                return CodePreview.create(
+                    curve: curve, width: 550, duration: duration, ref: ref);
+              })),
         ],
       ),
     );

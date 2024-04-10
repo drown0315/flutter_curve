@@ -1,7 +1,7 @@
 part of 'code_preview.dart';
 
-class SpringCodePreview extends CodePreview<SpringCurve> {
-  const SpringCodePreview(
+class SpringBasicCodePreview extends CodePreview<SpringCurve> {
+  const SpringBasicCodePreview(
       {super.key,
       required super.curve,
       required super.width,
@@ -13,12 +13,29 @@ class SpringCodePreview extends CodePreview<SpringCurve> {
   @override
   List<String> getCurveOptionsText() {
     return [
-      if (curve.frequency > 0) 'frequency: ${curve.frequency}',
-      if (curve.friction > 0) 'friction: ${curve.friction}',
-      if (curve.anticipationSize > 0)
-        'anticipationSize: ${curve.anticipationSize}',
-      if (curve.anticipationStrength > 0)
-        'anticipationStrength: ${curve.anticipationStrength}',
+      'tension: ${curve.tension}',
+      'friction: ${curve.friction}',
+    ];
+  }
+}
+
+class SpringAdvanceCodePreview extends CodePreview<SpringCurve> {
+  const SpringAdvanceCodePreview(
+      {super.key,
+      required super.curve,
+      required super.width,
+      required super.duration});
+
+  @override
+  String getCurveName() => 'SpringCurve.advance';
+
+  @override
+  List<String> getCurveOptionsText() {
+    return [
+      'damping: ${curve.damping}',
+      'stiffness: ${curve.stiffness}',
+      'mass: ${curve.mass}',
+      'velocity: ${curve.velocity}',
     ];
   }
 }

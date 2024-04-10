@@ -2,6 +2,9 @@ import 'package:example/src/example/widgets/code_preview/ease_code_preview.dart'
 import 'package:example/src/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_curve/flutter_curve.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../curve_option/spring_option.dart';
 
 part 'spring_code_preview.dart';
 
@@ -9,6 +12,8 @@ part 'bounce_code_preview.dart';
 
 part 'gravity_code_preview.dart';
 
+/// Code Preview.
+/// Used to display the code of the curve.
 abstract class CodePreview<T extends Curve> extends StatelessWidget {
   const CodePreview({
     Key? key,
@@ -21,12 +26,19 @@ abstract class CodePreview<T extends Curve> extends StatelessWidget {
   final Duration duration;
   final double width;
 
+  /// Only used in build method.
   static CodePreview create(
       {required Curve curve,
       required double width,
-      required Duration duration}) {
+      required Duration duration,
+      required WidgetRef ref}) {
     if (curve is SpringCurve) {
-      return SpringCodePreview(curve: curve, width: width, duration: duration);
+      final bool isSpringAdvancedMode = ref.watch(springIsAdvancedModeProvider);
+      return isSpringAdvancedMode
+          ? SpringAdvanceCodePreview(
+              curve: curve, width: width, duration: duration)
+          : SpringBasicCodePreview(
+              curve: curve, width: width, duration: duration);
     } else if (curve is BounceCurve) {
       return BounceCodePreview(curve: curve, width: width, duration: duration);
     } else if (curve is ForceWithGravityCurve) {

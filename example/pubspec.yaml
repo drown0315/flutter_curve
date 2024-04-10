@@ -39,6 +39,7 @@ dependencies:
     path: ../
   gap: ^3.0.1
   url_launcher: ^6.2.5
+  flutter_riverpod: ^2.5.1
 
 dev_dependencies:
   flutter_test:

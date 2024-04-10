@@ -11,9 +11,8 @@ void main() {
   group('Curve Code Preview', () {
     testWidgets('Spring curve display correct', (tester) async {
       /// Arrange.
-      const SpringCurve curve =
-          SpringCurve(anticipationSize: 200, anticipationStrength: 20);
-      const SpringCodePreview codePreview = SpringCodePreview(
+      final SpringCurve curve = SpringCurve(friction: 200, tension: 20);
+      final SpringBasicCodePreview codePreview = SpringBasicCodePreview(
         curve: curve,
         duration: _defaultDuration,
         width: _defaultWidth,
@@ -25,15 +24,31 @@ void main() {
       /// Assert.
       expect(find.textContaining('SpringCurve'), findsOneWidget);
       expect(
-          find.textContaining('frequency: ${curve.frequency}'), findsOneWidget);
-      expect(
           find.textContaining('friction: ${curve.friction}'), findsOneWidget);
-      expect(find.textContaining('anticipationSize: ${curve.anticipationSize}'),
-          findsOneWidget);
+      expect(find.textContaining('tension: ${curve.tension}'), findsOneWidget);
+    });
+
+    testWidgets('Advanced Spring curve display correct', (tester) async {
+      /// Arrange.
+      final SpringCurve curve = SpringCurve.advance(
+          damping: 23, stiffness: 30, mass: 2.0, velocity: 0.3);
+      final SpringAdvanceCodePreview codePreview = SpringAdvanceCodePreview(
+        curve: curve,
+        duration: _defaultDuration,
+        width: _defaultWidth,
+      );
+
+      /// Act.
+      await tester.pumpWidget(wrapWithMaterialApp(codePreview));
+
+      /// Assert.
+      expect(find.textContaining('SpringCurve'), findsOneWidget);
+      expect(find.textContaining('damping: ${curve.damping}'), findsOneWidget);
       expect(
-          find.textContaining(
-              'anticipationStrength: ${curve.anticipationStrength}'),
-          findsOneWidget);
+          find.textContaining('stiffness: ${curve.stiffness}'), findsOneWidget);
+      expect(find.textContaining('mass: ${curve.mass}'), findsOneWidget);
+      expect(
+          find.textContaining('velocity: ${curve.velocity}'), findsOneWidget);
     });
 
     testWidgets('Bounce curve', (tester) async {
