@@ -36,6 +36,7 @@ abstract class CurveOptionsState<T extends CurveOption> extends State<T> {
             },
             initialValue: _initialDuration.inMilliseconds,
             width: widget.width,
+            maxValue: 5000,
           ),
           ...buildConfigs(),
         ]..expand(
