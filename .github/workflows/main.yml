@@ -12,7 +12,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  flutter_analyze_and_test:
     runs-on: ubuntu-latest
 
     steps:
