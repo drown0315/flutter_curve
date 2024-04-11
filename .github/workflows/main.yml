@@ -25,10 +25,10 @@ jobs:
       - run: flutter --version
 
       - name: Analyze and test project source
-        uses: ./.github/workflows/actions/dart-analyze-test
+        uses: ./.github/workflows/actions/flutter-analyze-test
 
       - name: cd example
         run: cd example
 
       - name: Analyze and test example project source
-        uses: ./.github/workflows/actions/dart-analyze-test
+        uses: ./.github/workflows/actions/flutter-analyze-test
