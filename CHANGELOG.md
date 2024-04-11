@@ -4,6 +4,7 @@
 - refactor spring curve
 - improved example
 
+
 ## 0.0.2
 
 - improved documentation
