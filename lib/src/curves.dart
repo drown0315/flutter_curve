@@ -98,12 +98,12 @@ class SpringCurve extends Curve {
       1.0,
       velocity);
 
-  static const double initialDamping = 15;
-  static const double initialStiffness = 300;
-  static const double initialVelocity = 0.0;
-  static const double initialMass = 1.0;
-  static const double initialFriction = initialDamping;
-  static const double initialTension = initialStiffness;
+  static const double defaultDamping = 15;
+  static const double defaultStiffness = 300;
+  static const double defaultVelocity = 0.0;
+  static const double defaultMass = 1.0;
+  static const double defaultFriction = defaultDamping;
+  static const double defaultTension = defaultStiffness;
 
   double get friction => damping;
 
@@ -113,22 +113,22 @@ class SpringCurve extends Curve {
   /// If you use design tools like `Principle` or `ProtoPie`, recommend using this constructor.
   /// these parameters are equivalent to the parameters in the software design.
   factory SpringCurve(
-      {double friction = initialFriction, double tension = initialTension}) {
+      {double friction = defaultFriction, double tension = defaultTension}) {
     return SpringCurve._(
-        mass: initialMass,
+        mass: defaultMass,
         stiffness: tension,
         damping: friction,
-        velocity: initialVelocity);
+        velocity: defaultVelocity);
   }
 
   /// Advanced Spring Curve: damping, stiffness, mass, velocity.
   /// if you want to use more advanced parameters, use [SpringCurve.advance].
   /// if you use design tools like `Framer`, recommend using this constructor.
   factory SpringCurve.advance({
-    double damping = initialDamping,
-    double stiffness = initialStiffness,
-    double mass = initialMass,
-    double velocity = initialVelocity,
+    double damping = defaultDamping,
+    double stiffness = defaultStiffness,
+    double mass = defaultMass,
+    double velocity = defaultVelocity,
   }) {
     return SpringCurve._(
       damping: damping,
