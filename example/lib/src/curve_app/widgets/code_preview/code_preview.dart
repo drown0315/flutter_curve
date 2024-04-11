@@ -1,4 +1,4 @@
-import 'package:example/src/example/widgets/code_preview/ease_code_preview.dart';
+import 'package:example/src/curve_app/widgets/code_preview/ease_code_preview.dart';
 import 'package:example/src/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_curve/flutter_curve.dart';

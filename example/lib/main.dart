@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'src/example/app/app_example.dart';
-import 'src/example/web/web_example.dart';
+import 'src/curve_app/app/app_page.dart';
+import 'src/curve_app/web/web_page.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));

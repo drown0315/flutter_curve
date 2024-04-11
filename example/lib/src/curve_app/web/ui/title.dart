@@ -1,4 +1,4 @@
-part of '../web_example.dart';
+part of '../web_page.dart';
 
 class _Title extends StatelessWidget {
   const _Title();

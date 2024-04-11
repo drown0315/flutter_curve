@@ -1,4 +1,4 @@
-import 'package:example/src/example/widgets/ball_animation.dart';
+import 'package:example/src/curve_app/widgets/ball_animation.dart';
 import 'package:example/src/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';

@@ -1,5 +1,5 @@
-import 'package:example/src/example/widgets/code_preview/code_preview.dart';
-import 'package:example/src/example/widgets/curve_option/cubic_option.dart';
+import 'package:example/src/curve_app/widgets/code_preview/code_preview.dart';
+import 'package:example/src/curve_app/widgets/curve_option/cubic_option.dart';
 import 'package:flutter_curve/flutter_curve.dart';
 
 class EaseCodePreview extends CodePreview<CubicCurve> {
