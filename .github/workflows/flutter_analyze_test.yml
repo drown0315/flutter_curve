@@ -29,5 +29,5 @@ jobs:
 
       - name: Analyze and test example project source
         run: |
-          cd example &&
-          ./.github/workflows/actions/flutter-analyze-test
+          cd example
+          flutter test
