@@ -1,11 +1,12 @@
 # flutter_curve
 
-Flutter Curve library is inspired by [Dynamic.js](http://dynamicsjs.com/)
+Flutter Curve library is inspired by [Dynamic.js](https://github.com/michaelvillar/dynamics.js)
 
 To see some demos, check out [flutter_curve_web](https://drown0315.github.io/flutter_curve/).
 
+flutter_curve is to create physics-based animations, to drive animation by curve.
 
-This library lets you easy to customize your own curve animation.
+This library lets you easy to customize your physics-based curve animation.
 
 ## Example
 
