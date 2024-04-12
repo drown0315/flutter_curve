@@ -5,10 +5,13 @@ import '../../../style.dart';
 typedef OptionChanged<T extends Curve> = void Function(
     Duration duration, T curve);
 
+/// Slider Option of curve
 abstract class CurveOption<T extends Curve> extends StatefulWidget {
-  const CurveOption({Key? key, required this.onChanged}) : super(key: key);
+  const CurveOption({Key? key, required this.onChanged, required this.width})
+      : super(key: key);
 
   final OptionChanged<T> onChanged;
+  final double width;
 
   @override
   CurveOptionsState createState();
@@ -32,6 +35,8 @@ abstract class CurveOptionsState<T extends CurveOption> extends State<T> {
               onDurationChanged(duration);
             },
             initialValue: _initialDuration.inMilliseconds,
+            width: widget.width,
+            maxValue: 5000,
           ),
           ...buildConfigs(),
         ]..expand(
@@ -56,12 +61,14 @@ class CurveOptionItem extends StatefulWidget {
       this.minValue = 1,
       this.maxValue = 1000,
       required this.onChanged,
-      required this.initialValue});
+      required this.initialValue,
+      required this.width});
 
   final String title;
   final int initialValue;
   final int minValue;
   final int maxValue;
+  final double width;
   final ValueChanged<int> onChanged;
 
   @override
@@ -71,14 +78,14 @@ class CurveOptionItem extends StatefulWidget {
 }
 
 class _CurveOptionItemState extends State<CurveOptionItem> {
-  final TextStyle _textStyle =
-      const TextStyle(fontSize: 12, color: Colors.black87);
+  final TextStyle _textStyle = const TextStyle(
+      fontSize: 13, color: Colors.black87, fontWeight: FontWeight.w500);
   late int _sliderValue = widget.initialValue;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.sizeOf(context).width * 0.86,
+      width: widget.width,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

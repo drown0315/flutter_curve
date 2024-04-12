@@ -1,0 +1,32 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Build Web Page
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  publish_web_page:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Clone repository
+        uses: actions/checkout@v4
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable # or: beta, master (or main)
+      - run: flutter --version
+
+      - uses: actions/labeler@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and Publish Web page
+        working-directory: ./example
+        run: make deploy OUTPUT=flutter_curve TOKEN=${{ secrets.GITHUB_TOKEN }}
+

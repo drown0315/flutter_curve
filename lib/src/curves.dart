@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:flutter/physics.dart';
 import 'package:flutter/widgets.dart';
 
 class CubicCurve extends Cubic {
@@ -7,17 +8,27 @@ class CubicCurve extends Cubic {
 
   static const defaultFriction = 500;
 
+  /// A cubic animation curve that starts slowly and ends quickly.
+  ///
+  /// {@animation 464 192 https://flutter.github.io/assets-for-api-docs/assets/animation/curve_ease_in.mp4}
   factory CubicCurve.easeIn({int friction = defaultFriction}) {
     _checkFrictionValidate(friction);
     return CubicCurve._(0.92 - (friction / 1000), 0.0, 1.0, 1.0);
   }
 
+  /// A cubic animation curve that starts slowly, speeds up, and then ends
+  /// slowly.
+  ///
+  /// {@animation 464 192 https://flutter.github.io/assets-for-api-docs/assets/animation/curve_ease_in_out.mp4}
   factory CubicCurve.easeInOut({int friction = defaultFriction}) {
     _checkFrictionValidate(friction);
     return CubicCurve._(
         0.92 - (friction / 1000), 0.0, 0.08 + (friction / 1000), 1.0);
   }
 
+  /// A cubic animation curve that starts quickly and ends slowly.
+  ///
+  /// {@animation 464 192 https://flutter.github.io/assets-for-api-docs/assets/animation/curve_ease_out.mp4}
   factory CubicCurve.easeOut({int friction = defaultFriction}) {
     _checkFrictionValidate(friction);
     return CubicCurve._(0.0, 0.0, 0.08 + (friction / 1000), 1.0);
@@ -56,79 +67,123 @@ class BounceCurve extends Curve {
   }
 }
 
+/// The Spring curve that follows Hooke's law.
+///
+/// Use [SpringCurve] in place of any curve.
+///
+/// Basic Spring Curve: only tension and friction. these parameters are equivalent
+/// to the parameters in design tools such as `Principle` and `ProtoPie`.
+/// e.g.
+/// ```dart
+///  SpringCurve(tension: 300, friction: 200);
+/// ```
+///
+/// Advanced Spring Curve: damping, stiffness, mass, velocity.
+/// if you want to use more advanced parameters, use [SpringCurve.advance].
 class SpringCurve extends Curve {
-  final int frequency;
-  final int friction;
-  final int anticipationSize;
-  final int anticipationStrength;
+  SpringCurve._(
+      {required this.damping,
+      required this.stiffness,
+      required this.mass,
+      required this.velocity});
 
-  const SpringCurve(
-      {this.frequency = 300,
-      this.friction = 200,
-      this.anticipationSize = 0,
-      this.anticipationStrength = 0})
-      : assert(
-            frequency > 0 && frequency <= 1000, 'frequency must be in (0,100]'),
-        assert(friction > 0 && friction <= 1000, 'friction must be in (0,100]'),
-        assert(anticipationSize >= 0 && anticipationSize <= 1000,
-            'anticipationSize must be in [0,100]'),
-        assert(anticipationStrength >= 0 && anticipationStrength <= 1000,
-            'anticipationStrength must be in [0,100]');
+  final double damping;
+  final double stiffness;
+  final double mass;
+  final double velocity;
+
+  late final SpringSimulation _springSimulation = SpringSimulation(
+      SpringDescription(mass: mass, stiffness: stiffness, damping: damping),
+      0.0,
+      1.0,
+      velocity);
+
+  static const double defaultDamping = 15;
+  static const double defaultStiffness = 300;
+  static const double defaultVelocity = 0.0;
+  static const double defaultMass = 1.0;
+  static const double defaultFriction = defaultDamping;
+  static const double defaultTension = defaultStiffness;
+
+  double get friction => damping;
+
+  double get tension => stiffness;
+
+  /// Provides basic spring curve.
+  /// If you use design tools like `Principle` or `ProtoPie`, recommend using this constructor.
+  /// these parameters are equivalent to the parameters in the software design.
+  factory SpringCurve(
+      {double friction = defaultFriction, double tension = defaultTension}) {
+    return SpringCurve._(
+        mass: defaultMass,
+        stiffness: tension,
+        damping: friction,
+        velocity: defaultVelocity);
+  }
+
+  /// Advanced Spring Curve: damping, stiffness, mass, velocity.
+  /// if you want to use more advanced parameters, use [SpringCurve.advance].
+  /// if you use design tools like `Framer`, recommend using this constructor.
+  factory SpringCurve.advance({
+    double damping = defaultDamping,
+    double stiffness = defaultStiffness,
+    double mass = defaultMass,
+    double velocity = defaultVelocity,
+  }) {
+    return SpringCurve._(
+      damping: damping,
+      stiffness: stiffness,
+      mass: mass,
+      velocity: velocity,
+    );
+  }
 
   @override
   double transformInternal(double t) {
-    final double realFrequency = math.max(1, frequency / 20);
-    final num realFriction = math.pow(20, friction / 100);
-    final double s = anticipationSize / 1000;
-
-    final double frictionT = (t / (1 - s)) - (s / (1 - s));
-    final double b;
-    final double a;
-    final double at;
-    if (t < s) {
-      final double yS = (s / (1 - s)) - (s / (1 - s));
-      final double y0 = (0 / (1 - s)) - (s / (1 - s));
-      b = math.acos(1 / getAt1(t: yS, s: s));
-      a = (math.acos(1 / getAt1(t: y0, s: s)) - b) / (frequency * (-s));
-      at = getAt1(s: s, t: frictionT);
-    } else {
-      b = 0;
-      a = 1;
-      at = getAt2(t: frictionT, friction: realFriction);
-    }
-    final double angle = realFrequency * (t - s) * a + b;
-    return 1 - (at * math.cos(angle));
+    return _springSimulation.x(t) + t * (1 - _springSimulation.x(1));
   }
 
-  double getAt1({required double t, required double s}) {
-    const double M = 0.8;
-    final double x0 = (s / (1 - s));
-    const double x1 = 0;
-    final double b = (x0 - (M * x1)) / (x0 - x1);
-    final double a = (M - b) / x0;
-    return (a * t * anticipationStrength / 100) + b;
-  }
-
-  double getAt2({required double t, required friction}) {
-    return math.pow(friction / 10, -t) * (1 - t);
-  }
-
-  SpringCurve copyWith(
-      {int? frequency,
-      int? friction,
-      int? anticipationSize,
-      int? anticipationStrength}) {
+  SpringCurve copyWith({
+    double? friction,
+    double? tension,
+  }) {
     return SpringCurve(
-        frequency: frequency ?? this.frequency,
-        friction: friction ?? this.friction,
-        anticipationSize: anticipationSize ?? this.anticipationSize,
-        anticipationStrength:
-            anticipationStrength ?? this.anticipationStrength);
+      friction: friction ?? this.friction,
+      tension: tension ?? this.tension,
+    );
+  }
+
+  SpringCurve copyWithAdvance({
+    double? damping,
+    double? stiffness,
+    double? mass,
+    double? velocity,
+  }) {
+    return SpringCurve.advance(
+      damping: damping ?? this.damping,
+      stiffness: stiffness ?? this.stiffness,
+      mass: mass ?? this.mass,
+      velocity: velocity ?? this.velocity,
+    );
   }
 
   @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SpringCurve &&
+          runtimeType == other.runtimeType &&
+          damping == other.damping &&
+          stiffness == other.stiffness &&
+          mass == other.mass &&
+          velocity == other.velocity;
+
+  @override
+  int get hashCode =>
+      damping.hashCode ^ stiffness.hashCode ^ mass.hashCode ^ velocity.hashCode;
+
+  @override
   String toString() {
-    return 'SpringCurve{frequency: $frequency, friction: $friction, anticipationSize: $anticipationSize, anticipationStrength: $anticipationStrength}';
+    return 'SpringCurve{damping: $damping, stiffness: $stiffness, mass: $mass, velocity: $velocity}';
   }
 }
 
@@ -138,9 +193,9 @@ class GravityCurve extends Curve {
       this.elasticity = 200,
       this.returnToInitial = false})
       : assert(bounciness > 0 && bounciness <= 1000,
-            'bounciness must be in (0,100]'),
+            'bounciness must be in (0,1000]'),
         assert(elasticity > 0 && elasticity <= 1000,
-            'elasticity must be in (0,100]');
+            'elasticity must be in (0,1000]');
 
   final int bounciness;
   final int elasticity;

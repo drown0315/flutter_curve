@@ -1,0 +1,33 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Flutter
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  flutter_analyze_and_test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable # or: beta, master (or main)
+      - run: flutter --version
+
+      - name: Analyze and test project source
+        uses: ./.github/workflows/actions/flutter-analyze-test
+
+      - name: Analyze and test example project source
+        run: |
+          cd example
+          flutter test

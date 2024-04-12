@@ -1,27 +1,31 @@
 import 'package:flutter/material.dart';
 
-class AnimationExample extends StatefulWidget {
-  const AnimationExample(
-      {super.key, required this.curve, required this.duration});
+/// Curved ball animation.
+class BallAnimation extends StatefulWidget {
+  const BallAnimation(
+      {super.key,
+      required this.curve,
+      required this.duration,
+      required this.width});
 
   final Curve curve;
   final Duration duration;
+  final double width;
 
   @override
-  State<AnimationExample> createState() => _AnimationExampleState();
+  State<BallAnimation> createState() => _BallAnimationState();
 }
 
-class _AnimationExampleState extends State<AnimationExample>
+class _BallAnimationState extends State<BallAnimation>
     with SingleTickerProviderStateMixin {
   final double _movingCircleRadius = 15;
   final double _guideLineCircleRadius = 5;
 
   @override
   Widget build(BuildContext context) {
-    final maxMoveValue =
-        MediaQuery.sizeOf(context).width * 0.8 - _movingCircleRadius * 2;
+    final maxMoveValue = widget.width - _movingCircleRadius * 2;
     return Container(
-      width: MediaQuery.sizeOf(context).width * 0.8,
+      width: widget.width,
       height: 30,
       alignment: Alignment.center,
       child: Stack(
@@ -55,7 +59,7 @@ class _AnimationExampleState extends State<AnimationExample>
           width: _movingCircleRadius * 2,
           height: _movingCircleRadius * 2,
           decoration: const BoxDecoration(
-            color: Colors.blue,
+            color: Colors.blueAccent,
             shape: BoxShape.circle,
           ),
         ));

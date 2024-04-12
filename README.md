@@ -2,7 +2,12 @@
 
 Flutter Curve library is inspired by [Dynamic.js](http://dynamicsjs.com/)
 
+To see some demos, check out [flutter_curve_web](https://drown0315.github.io/flutter_curve/).
+
+
 This library lets you easy to customize your own curve animation.
+
+## Example
 
 Use them like you use `Curve`, because `flutter_curve` is a subclass of `Curve`.
 
@@ -23,9 +28,7 @@ final scrollController = ScrollController();
 scrollController.animateTo(0, duration: const Duration(milliseconds: 500),
 curve: CubicCurve.easeIn(frition: 30));
 ```
-## Example
 
-<img src="https://raw.githubusercontent.com/drown0315/flutter_curve/assets/flutter_curve.gif" width="360" height="808"/>
 
 ## Usage
 

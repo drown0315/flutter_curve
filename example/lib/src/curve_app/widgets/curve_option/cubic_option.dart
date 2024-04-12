@@ -13,6 +13,7 @@ class CubicOption extends CurveOption<CubicCurve> {
     super.key,
     required this.cubicType,
     required super.onChanged,
+    required super.width,
   });
 
   final CubicType cubicType;
@@ -64,6 +65,7 @@ class CubicOptionState extends CurveOptionsState<CubicOption> {
           }
         },
         initialValue: CubicCurve.defaultFriction,
+        width: widget.width,
       ),
     ];
   }

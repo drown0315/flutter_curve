@@ -3,7 +3,8 @@ import 'package:flutter_curve/flutter_curve.dart';
 import 'curve_option.dart';
 
 class BounceOption extends CurveOption<BounceCurve> {
-  const BounceOption({super.key, required super.onChanged});
+  const BounceOption(
+      {super.key, required super.onChanged, required super.width});
 
   @override
   CurveOptionsState createState() {
@@ -24,6 +25,7 @@ class BounceOptionState extends CurveOptionsState<BounceOption> {
           _onOptionChanged(_curCurve.copyWith(frequency: frequency));
         },
         initialValue: _initialCurve.frequency,
+        width: widget.width,
       ),
       CurveOptionItem(
         title: 'friction',
@@ -31,6 +33,7 @@ class BounceOptionState extends CurveOptionsState<BounceOption> {
           _onOptionChanged(_curCurve.copyWith(friction: friction));
         },
         initialValue: _initialCurve.friction,
+        width: widget.width,
       ),
     ];
   }
