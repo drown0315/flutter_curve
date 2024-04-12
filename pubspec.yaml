@@ -1,6 +1,6 @@
 name: flutter_curve
-description: Easy customize animation curve.
-version: 0.0.2
+description: flutter_curve is to create physics-based animations, to drive animation by curve.
+version: 1.0.0
 homepage: https://github.com/drown0315/flutter_curve
 issue_tracker: https://github.com/drown0315/flutter_curve/issues
 
