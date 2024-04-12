@@ -2,7 +2,7 @@
 
 Flutter Curve library is inspired by [Dynamic.js](http://dynamicsjs.com/)
 
-To see some demos, check out [flutter_curve_web](https://drown0315.github.io/flutter_curve_web/).
+To see some demos, check out [flutter_curve_web](https://drown0315.github.io/flutter_curve/).
 
 
 This library lets you easy to customize your own curve animation.
