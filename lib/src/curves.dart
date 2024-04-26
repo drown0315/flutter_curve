@@ -87,9 +87,34 @@ class SpringCurve extends Curve {
       required this.mass,
       required this.velocity});
 
+  /// The damping coefficient (c).
+  ///
+  /// It is a pure number without physical meaning,describes the oscillation
+  /// and decay of a system after being disturbed.The larger the damping,
+  /// the fewer oscillations and smaller the amplitude of the elastic motion.
   final double damping;
+
+  /// The spring constant (k).
+  ///
+  /// The units of stiffness are M/T², where M is the mass unit used for the
+  /// value of the [mass] property, and T is the time unit used for driving
+  /// the [SpringSimulation].
+  ///
+  /// Stiffness defines the spring constant, which measures the strength of
+  /// the spring. A stiff spring applies more force to the object that is
+  /// attached when the spring is not at the rest position.
   final double stiffness;
+
+  /// The mass of the spring (m).
+  ///
+  /// The units are arbitrary, but all springs within a system should use
+  /// the same mass units.
+  ///
+  /// The greater the mass, the larger the amplitude of oscillation,
+  /// and the longer the time to return to the equilibrium position.
   final double mass;
+
+
   final double velocity;
 
   late final SpringSimulation _springSimulation = SpringSimulation(
@@ -110,8 +135,19 @@ class SpringCurve extends Curve {
   double get tension => stiffness;
 
   /// Provides basic spring curve.
-  /// If you use design tools like `Principle` or `ProtoPie`, recommend using this constructor.
-  /// these parameters are equivalent to the parameters in the software design.
+  ///
+  /// [friction] describes the oscillation and decay of a system after being
+  /// disturbed. The larger the damping, the fewer oscillations and smaller the
+  /// amplitude of the elastic motion.
+  ///
+  /// [tension]  which measures the strength of the spring. A stiff spring applies
+  /// more force to the object that is attached when the spring is not at the rest position.
+  ///
+  /// If you use design tools like `Principle` or `ProtoPie`,
+  /// recommend using this constructor. these parameters are equivalent to the
+  /// parameters in the software design.
+  ///
+  /// If you want to use more advanced parameters, consider use [SpringCurve.advance].
   factory SpringCurve(
       {double friction = defaultFriction, double tension = defaultTension}) {
     return SpringCurve._(
@@ -121,9 +157,16 @@ class SpringCurve extends Curve {
         velocity: defaultVelocity);
   }
 
-  /// Advanced Spring Curve: damping, stiffness, mass, velocity.
-  /// if you want to use more advanced parameters, use [SpringCurve.advance].
-  /// if you use design tools like `Framer`, recommend using this constructor.
+  /// Creates a spring given the mass (m), stiffness (k), and damping ratio (ζ).
+  /// The damping ratio describes a gradual reduction in a spring oscillation.
+  /// By using the damping ratio, you can define how rapidly the oscillations
+  /// decay from one bounce to the next.
+  ///
+  /// Do not confuse the damping _coefficient_ (c) with the damping _ratio_ (ζ).
+  /// To create a [SpringCurve] with a damping ratio,
+  /// use the [SpringDescription] default constructor.
+  ///
+  /// If you use design tools like `Framer`, recommend using this constructor.
   factory SpringCurve.advance({
     double damping = defaultDamping,
     double stiffness = defaultStiffness,
